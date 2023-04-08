@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&display=swap');
+:root{
+    --red:rgb(228, 47, 47);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comfortaa', cursive;
+    
+}
+body{
+    background-color: black;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid white;
+}
+header h1{
+    color: white;
+    font-weight:bold;
+    padding: 1rem 1.5rem;
+}
+.brand{
+    color:var(--red);
+    font-weight: bolder;
+    font-size: 2.5rem;
+}
+.empty{
+   width: 150px;
+}
+.heading{
+    text-align: center;
+    padding: 20px;
+    color: #eee;
+}
+main{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.scorecard{
+    width: 50%;
+    margin: 20px auto;
+    border-radius: 5px;
+    background-color: white;
+    padding:20px 15px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    border: 3px solid var(--red);
+    box-sizing: content-box;
+}
+.scorecard:hover{
+    border: none;
+    transition: box-shadow 0.05s ease;
+    box-shadow: var(--red) 0px 7px 29px 0px;
+}
+
+.scorecard h4{
+    padding: 10px;
+    color: black;
+    font-size: 1em;
+}
+.scorecard h3{
+    text-align: center;
+    font-size: 1.5em;
+}
+.scorecard p{
+    margin: 20px auto;
+    font-size: 1.2em;
+    color:green;
+}
+
+.match-id{
+    display: none;
+}
+.match-score{
+    background-color: white;
+    border-radius: 10px;
+    width:90%;
+    margin: 20px auto;
+}
+.not-started{
+    text-align: center;
+    padding: 20px;
+    font-size: 1.5em;
+}
+.score-display{
+    margin-left:35px ;
+}
+.back{
+    float: right;
+    margin: 10px;
+    background-color: lightgray;
+    padding: 5px 10px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.match-head{
+    font-size: 2em;
+    padding: 30px 10px;
+    text-align: center;
+}
+.team-score{
+    padding:0  10px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.current-rr{
+    font-size: 1.1em;
+    font-weight: 300;
+    padding: 15px 10px;
+}
+.required-rr{
+    font-size: 1.1em;
+    font-weight: 300;
+    padding: 0 10px;
+}
+.status{
+    margin: 10px 0;
+    padding: 5px 10px;
+    color: green;
+}
+.recent{
+    font-size: 1em;
+    padding: 5px 10px;
+}
+
+table{
+    border-collapse: collapse;
+    margin: 20px  10px ;
+    width: 90%;
+    border: 1px solid black;
+}
+thead tr{
+    background-color: lightgray; 
+    font-weight: 600;
+    font-size: 1.15em;
+}
+table tr{
+    padding: 0.45em;
+    border: 1px solid black;
+}
+table td{
+    text-align: left;
+    padding: 1em;
+    font-size: 1em;
+    width:25px;
+    
+}
+.player{
+    width:150px;
+}
+.p-name{
+    color:rgb(7, 41, 153);
+    padding:5px 7px;
+}
+
+
+
+@media screen and (max-width:540px) {
+    
+    .empty{
+        display: none;
+    }
+    header{
+        justify-content: center;
+    }
+    .scorecard{
+        width: 80%;
+    }
+    .score-display{
+        margin-left:10px;
+    }
+    table td{
+        padding: 0.5em;
+        font-size: 1em;
+    }
+    
+}
