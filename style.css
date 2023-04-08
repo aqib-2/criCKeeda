@@ -100,6 +100,9 @@ main{
     border-radius: 50px;
     cursor: pointer;
 }
+.back:active{
+    background-color: var(--red);
+}
 .match-head{
     font-size: 2em;
     padding: 30px 10px;
