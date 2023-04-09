@@ -1,14 +1,15 @@
 /*
 'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41'
 'd6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7'
+'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925'
 */
 
 let main=document.getElementById('main');
-
+let news=document.getElementById('news');
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'd6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7',
+		'X-RapidAPI-Key': 'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925',
 		'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 	}
 };
@@ -52,7 +53,7 @@ const showData = (data) =>{
 function test(info){
   const mId=info.lastElementChild.innerHTML;
   //console.log(eID);
-  setInterval(showScore(mId),30000);
+  showScore(mId)
 }
   
 
@@ -136,7 +137,7 @@ async function showScore(sId){
                         <td>${data.miniscore.batsmanStriker.batStrikeRate}</td>
                     </tr>
                     <tr>
-                        <td class="p-name">${data.miniscore.batsmanNonStriker.batName}*</td>
+                        <td class="p-name">${data.miniscore.batsmanNonStriker.batName}</td>
                         <td>${data.miniscore.batsmanNonStriker.batRuns}</td>
                         <td>${data.miniscore.batsmanNonStriker.batBalls}</td>
                         <td>${data.miniscore.batsmanNonStriker.batFours}</td>
@@ -178,4 +179,43 @@ async function showScore(sId){
   }
 }
 
- 
+const getNews = () =>{
+  fetch('https://cricbuzz-cricket.p.rapidapi.com/news/v1/index', options)
+	.then(response => response.json())
+	.then(response => showNews(response))
+	.catch(err => console.error(err));
+}
+
+const showNews = (newsinfo) =>{
+    let newsdata=newsinfo.storyList
+    news.innerHTML="";
+
+    newsdata.forEach((newsData) =>{
+     if(newsData.story){
+     const {id,hline,intro}=newsData.story;
+     const newsContent = document.createElement('div');
+     newsContent.classList.add('content');
+     newsContent.setAttribute("onclick","testNews(this)");
+     newsContent.innerHTML=`
+     <h2>${hline}</h2>
+     <p>${intro}</p>
+     <p class="news-id">${id}</p>
+       `;
+       news.appendChild(newsContent);
+      
+     }
+    })
+}
+getNews();
+
+function testNews(info){
+  let newsId=info.lastElementChild.innerHTML;
+  fetch(`https://cricbuzz-cricket.p.rapidapi.com/news/v1/detail/${newsId}`, options)
+	.then(response => response.json())
+	.then(response =>  redirect(response))
+	.catch(err => console.error(err));
+}
+const redirect = (data) =>{
+   let url=data.appIndex.webURL;
+   window.location.href = url;
+}
