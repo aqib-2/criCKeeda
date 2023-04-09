@@ -9,7 +9,7 @@ let news=document.getElementById('news');
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925',
+		'X-RapidAPI-Key': 'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41',
 		'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 	}
 };
