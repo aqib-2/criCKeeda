@@ -1,7 +1,7 @@
 /*
-'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41'
-'d6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7'
-'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925'
+2018--'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41'
+581--'d6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7'
+82001--'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925'
 */
 
 let main=document.getElementById('main');
@@ -9,7 +9,7 @@ let news=document.getElementById('news');
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41',
+		'X-RapidAPI-Key': 'd6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7',
 		'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 	}
 };
