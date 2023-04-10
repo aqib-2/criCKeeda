@@ -72,6 +72,7 @@ async function showScore(sId){
   } else{
 
   let sDetails=data.miniscore.matchScoreDetails.inningsScoreList;
+  let commArr=[];
 
   //function to check the data received from the api such that we can display the score
   const check = (arr) =>{
@@ -102,7 +103,28 @@ async function showScore(sId){
         return data.miniscore.requiredRunRate
       }
     }
+ 
+    const comm=()=>{
 
+      let commentary=data.commentaryList;
+      for(let i=0;i<10;i++) {
+            let {commText}=commentary[i];
+            if(commentary[i].overNumber){
+            commText=commentary[i].overNumber+" : "+"    "+commText;
+            }else{
+              commText=commText.bold();
+            }
+            if(Object.keys(commentary[i].commentaryFormats).length != 0){
+            let formatId=commentary[i].commentaryFormats.bold.formatId;
+            let formatValue=commentary[i].commentaryFormats.bold.formatValue;
+             for (let j = 0; j < formatId.length; j++) {
+              commText=commText.replace(formatId[j],formatValue[j]);
+             }
+            }
+            commArr.push(commText);
+      }
+    }
+    comm();
   //Insertion of HTML data dynamically
   const scoredata=document.createElement('div');
   scoredata.classList.add('match-score');
@@ -173,6 +195,20 @@ async function showScore(sId){
                     <td class="economy">${data.miniscore.bowlerNonStriker.bowlEcon}</td>
                 </tr>
               </table>
+
+              <div class="comm">
+              <h2 class="comm-heading">Commentary</h2>
+              <p>${commArr[0]}</p>
+              <p>${commArr[1]}</p>
+              <p>${commArr[2]}</p>
+              <p>${commArr[3]}</p>
+              <p>${commArr[4]}</p>
+              <p>${commArr[5]}</p>
+              <p>${commArr[6]}</p>
+              <p>${commArr[7]}</p>
+              <p>${commArr[8]}</p>
+              <p>${commArr[9]}</p>
+              </div> 
           </div>`;
 
   main.appendChild(scoredata)

@@ -162,6 +162,23 @@ table td{
     color:rgb(7, 41, 153);
     padding:5px 7px;
 }
+.comm{
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin: 20px auto;
+}
+.comm p{
+    padding: 15px;
+    font-size: 1em;
+}
+.comm-heading{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: underline;
+    margin: 20px 0;
+}
 .content{
     background-color: #eee;
     display: flex;
@@ -205,9 +222,17 @@ table td{
     }
     table td{
         padding: 0.5em;
-        font-size: 1em;
+        font-size: 0.7em;
     }
     .content{
         width:80%;
+    }
+    .comm{
+        width:100%;
+    }
+    .comm p{
+        padding: 8px;
+        border-bottom: 1px solid black;
+        width:95%;
     }
 }
