@@ -52,7 +52,6 @@ main{
     display: flex;
     flex-direction: column; 
     box-shadow: var(--red) 0px 7px 25px 0px;
-    
     box-sizing: content-box;
 }
 .scorecard:hover{
@@ -88,15 +87,13 @@ main{
     font-size: 1.5em;
     background-color: white;
     width:70%;
-    height: 300px;
     border-radius: 10px;
     margin: 20px auto;
 }
 .not-started h2{
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    display: block;
+    text-align: center;
+    margin: 100px auto;
 }
 .score-display{
     margin-left:35px ;
