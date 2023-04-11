@@ -67,7 +67,7 @@ async function showScore(sId){
 
   if(!data.miniscore){
 
-    main.innerHTML='<h2 class="not-started">Match Not Yet Started</h2>';
+    main.innerHTML='<div class="not-started"><p class="back"  onclick="getData()">x</p><h2 >Match Not Yet Started</h2></div>';
 
   } else{
 

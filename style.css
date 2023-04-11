@@ -51,15 +51,15 @@ main{
     text-align: center;
     display: flex;
     flex-direction: column; 
-    border: 3px solid var(--red);
+    box-shadow: var(--red) 0px 7px 25px 0px;
+    
     box-sizing: content-box;
 }
 .scorecard:hover{
-    border: none;
-    transition: box-shadow 0.05s ease;
-    box-shadow: var(--red) 0px 7px 29px 0px;
+    border: 3px solid var(--red);
+    transition: border 0.05s ease;
+    box-shadow: none;
 }
-
 .scorecard h4{
     padding: 10px;
     color: black;
@@ -74,7 +74,6 @@ main{
     font-size: 1.2em;
     color:green;
 }
-
 .match-id{
     display: none;
 }
@@ -85,9 +84,19 @@ main{
     margin: 20px auto;
 }
 .not-started{
-    text-align: center;
     padding: 20px;
     font-size: 1.5em;
+    background-color: white;
+    width:70%;
+    height: 300px;
+    border-radius: 10px;
+    margin: 20px auto;
+}
+.not-started h2{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
 }
 .score-display{
     margin-left:35px ;
@@ -132,7 +141,6 @@ main{
     font-size: 1em;
     padding: 5px 10px;
 }
-
 table{
     border-collapse: collapse;
     margin: 20px  10px ;
@@ -214,8 +222,12 @@ table td{
     header{
         justify-content: center;
     }
-    .scorecard{
-        width: 80%;
+    .not-started{
+        width:80%;
+        font-size: 1.1em;
+    }
+    .scorecard,.content{
+        width:80%;
     }
     .score-display{
         margin-left:10px;
@@ -223,9 +235,6 @@ table td{
     table td{
         padding: 0.5em;
         font-size: 0.7em;
-    }
-    .content{
-        width:80%;
     }
     .comm{
         width:100%;
