@@ -67,7 +67,7 @@ async function showScore(sId){
 
   if(!data.miniscore){
 
-    main.innerHTML='<div class="not-started"><p class="back"  onclick="getData()">x</p><h2 >Match Not Yet Started</h2></div>';
+    main.innerHTML='<div class="not-started"><p class="back"  onclick="getData()">x</p><h2>Match Not Yet Started</h2></div>';
 
   } else{
 
@@ -103,14 +103,14 @@ async function showScore(sId){
         return data.miniscore.requiredRunRate
       }
     }
- 
+    //function to display commentary 
     const comm=()=>{
 
       let commentary=data.commentaryList;
-      for(let i=0;i<10;i++) {
+      for(let i=0;i<15;i++) {
             let {commText}=commentary[i];
             if(commentary[i].overNumber){
-            commText=commentary[i].overNumber+" : "+"    "+commText;
+            commText=commentary[i].overNumber+" : "+commText;
             }else{
               commText=commText.bold();
             }
@@ -208,6 +208,11 @@ async function showScore(sId){
               <p>${commArr[7]}</p>
               <p>${commArr[8]}</p>
               <p>${commArr[9]}</p>
+              <p>${commArr[10]}</p>
+              <p>${commArr[11]}</p>
+              <p>${commArr[12]}</p>
+              <p>${commArr[13]}</p>
+              <p>${commArr[14]}</p>
               </div> 
           </div>`;
 
