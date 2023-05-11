@@ -1,3 +1,4 @@
+
 /*
 2018--'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41'
 581--'d6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7'
@@ -9,7 +10,7 @@ let news=document.getElementById('news');
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'd6bfcf982amsh50263c6522159a7p132526jsn5e61884563d7',
+		'X-RapidAPI-Key': 'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925',
 		'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 	}
 };
@@ -73,7 +74,7 @@ async function showScore(sId){
 
   let sDetails=data.miniscore.matchScoreDetails.inningsScoreList;
   let commArr=[];
-
+  let commentaryHtml;
   //function to check the data received from the api such that we can display the score
   const check = (arr) =>{
     if(arr.length>1){
@@ -105,25 +106,25 @@ async function showScore(sId){
     }
     //function to display commentary 
     const comm=()=>{
-
-      let commentary=data.commentaryList;
-      for(let i=0;i<15;i++) {
-            let {commText}=commentary[i];
-            if(commentary[i].overNumber){
-            commText=commentary[i].overNumber+" : "+commText;
-            }else{
-              commText=commText.bold();
-            }
-            if(Object.keys(commentary[i].commentaryFormats).length != 0){
-            let formatId=commentary[i].commentaryFormats.bold.formatId;
-            let formatValue=commentary[i].commentaryFormats.bold.formatValue;
-             for (let j = 0; j < formatId.length; j++) {
-              commText=commText.replace(formatId[j],formatValue[j]);
-             }
-            }
-            commArr.push(commText);
-      }
-    }
+          let commentary=data.commentaryList;
+          for(let i=0;i<commentary.length;i++) {
+                let {commText}=commentary[i];
+                if(commentary[i].overNumber){
+                commText=commentary[i].overNumber+" : "+commText;
+                }else{
+                  commText=commText.bold();
+                }
+                if(Object.keys(commentary[i].commentaryFormats).length != 0){
+                let formatId=commentary[i].commentaryFormats.bold.formatId;
+                let formatValue=commentary[i].commentaryFormats.bold.formatValue;
+                for (let j = 0; j < formatId.length; j++) {
+                  commText=commText.replace(formatId[j],formatValue[j].bold());
+                }
+                }
+                commArr.push(commText);
+          }
+        commentaryHtml=commArr.map((text)=> `<p>${text}</p>`);
+      } 
     comm();
   //Insertion of HTML data dynamically
   const scoredata=document.createElement('div');
@@ -198,21 +199,7 @@ async function showScore(sId){
 
               <div class="comm">
               <h2 class="comm-heading">Commentary</h2>
-              <p>${commArr[0]}</p>
-              <p>${commArr[1]}</p>
-              <p>${commArr[2]}</p>
-              <p>${commArr[3]}</p>
-              <p>${commArr[4]}</p>
-              <p>${commArr[5]}</p>
-              <p>${commArr[6]}</p>
-              <p>${commArr[7]}</p>
-              <p>${commArr[8]}</p>
-              <p>${commArr[9]}</p>
-              <p>${commArr[10]}</p>
-              <p>${commArr[11]}</p>
-              <p>${commArr[12]}</p>
-              <p>${commArr[13]}</p>
-              <p>${commArr[14]}</p>
+              ${commentaryHtml.join(" ")}
               </div> 
           </div>`;
 
