@@ -24,6 +24,7 @@ async function getData(){
         //console.log(match);
         showData(match.typeMatches);
       } catch (error) {
+        main.innerHTML='<div class="scorecard"><h4>Error From Api</h4></div>'
         console.log(error);
       }
 }
@@ -68,7 +69,7 @@ async function showScore(sId){
 
   if(!data.miniscore){
 
-    main.innerHTML='<div class="not-started"><p class="back"  onclick="getData()">x</p><h2>Match Not Yet Started</h2></div>';
+    main.innerHTML='<div class="not-started"><p class="back-not"  onclick="getData()"> < back </p><h2>Match Not Yet Started</h2></div>';
 
   } else{
 
@@ -88,7 +89,7 @@ async function showScore(sId){
   
   //function to display the scoreboard based on the data received from api 
   const score = (obj) =>{
-      let x =String(obj.overs).slice(-1);
+    let x =String(obj.overs).slice(-1);
     if(x=='6'){
       obj.overs=Math.ceil(obj.overs);
     }
@@ -108,20 +109,25 @@ async function showScore(sId){
     const comm=()=>{
           let commentary=data.commentaryList;
           for(let i=0;i<commentary.length;i++) {
-                let {commText}=commentary[i];
-                if(commentary[i].overNumber){
+              let {commText}=commentary[i];
+              let regex=/[\\n]\w/g;
+              if(commentary[i].overNumber){
                 commText=commentary[i].overNumber+" : "+commText;
-                }else{
+              }else{
                   commText=commText.bold();
-                }
-                if(Object.keys(commentary[i].commentaryFormats).length != 0){
+              }
+              //to replace the datafomat with actual content
+              if(Object.keys(commentary[i].commentaryFormats).length != 0){
                 let formatId=commentary[i].commentaryFormats.bold.formatId;
                 let formatValue=commentary[i].commentaryFormats.bold.formatValue;
                 for (let j = 0; j < formatId.length; j++) {
                   commText=commText.replace(formatId[j],formatValue[j].bold());
                 }
-                }
-                commArr.push(commText);
+              }
+              if(commText.match(regex)){
+                commText.replace(regex,"<br/>")
+              }
+              commArr.push(commText);
           }
         commentaryHtml=commArr.map((text)=> `<p>${text}</p>`);
       } 
@@ -131,7 +137,7 @@ async function showScore(sId){
   scoredata.classList.add('match-score');
   scoredata.innerHTML=`
       <div class="score-display">
-          <p class="back"  onclick="getData()">x</p>
+          <p class="back"  onclick="getData()">< back</p>
           <h2 class="match-head">${data.matchHeader.team1.name} <br> Vs <br> ${data.matchHeader.team2.name}</h2>
           <p class="team-score">${check(sDetails)}</p>
           <p class="current-rr">CRR : ${data.miniscore.currentRunRate}</p>
@@ -207,13 +213,14 @@ async function showScore(sId){
   }
 }
 
+//function to get the news from API
 const getNews = () =>{
   fetch('https://cricbuzz-cricket.p.rapidapi.com/news/v1/index', options)
 	.then(response => response.json())
 	.then(response => showNews(response))
 	.catch(err => console.error(err));
 }
-
+//function to display the short news 
 const showNews = (newsinfo) =>{
     let newsdata=newsinfo.storyList
     news.innerHTML="";
@@ -227,23 +234,82 @@ const showNews = (newsinfo) =>{
      newsContent.innerHTML=`
      <h2>${hline}</h2>
      <p>${intro}</p>
-     <p class="news-id">${id}</p>
-       `;
-       news.appendChild(newsContent);
-      
+     <p class="news-id">${id}</p>`;
+     news.appendChild(newsContent);
      }
     })
 }
 getNews();
 
+//function to get the news summary by onclick
 function testNews(info){
   let newsId=info.lastElementChild.innerHTML;
   fetch(`https://cricbuzz-cricket.p.rapidapi.com/news/v1/detail/${newsId}`, options)
 	.then(response => response.json())
 	.then(response =>  redirect(response))
-	.catch(err => console.error(err));
+	.catch(err => {news.innerHTML='<div class="api-error">Error from API</div>'; console.log(err)});
 }
-const redirect = (data) =>{
-   let url=data.appIndex.webURL;
-   window.location.href = url;
+
+//function to diaplay the news summary
+function redirect(data){
+  news.innerHTML="";
+  const newsPara=data.content;
+  //console.log(newsPara);
+  let newsElement;
+  const newsDiv=[];
+  for(let i=0;i<newsPara.length;i++){
+      if(newsPara[i].content){
+        let newsText=newsPara[i].content.contentValue;
+        if(newsPara[i].content['hasFormat']==true){
+          let bold=[],italic=[],link=[];
+          //function to store the dataformats passed by the api
+          function newsPush(str,arr){
+            for(let j=0;j<str.length;j++){
+              arr.push(str[j])
+            }
+          }
+          let newsFormat=data.format;
+          //storing the dataformat into local variables
+          for(let j=0;j<newsFormat.length;j++){
+            if(newsFormat[j].type=='bold'){
+              newsPush(newsFormat[j]['value'],bold);
+            }else if(newsFormat[j].type=='italic'){
+              newsPush(newsFormat[j]['value'],italic);  
+            }else if(newsFormat[j].type=='links'){
+              newsPush(newsFormat[j]['value'],link); 
+            }
+          }
+          let regex1=/@I\d{1,2}[$]/g;
+          let regex2=/@B\d{1,2}[$]/g;
+          let regex3=/@L\d{1,2}[$]/g;
+          //replacing the dataformats with actual content
+          if(newsText.match(regex1)){
+            for(let m=0;m<italic.length;m++){
+              newsText=newsText.replace(italic[m]['id'],italic[m]['value'])
+            }       
+          }if(newsText.match(regex2)){
+            for(let m=0;m<bold.length;m++){
+              newsText=newsText.replace(bold[m]['id'],(bold[m]['value']).bold())
+            }
+          }if(newsText.match(regex3)){
+            for(let m=0;m<link.length;m++){
+              newsText=newsText.replace(link[m]['id'],link[m]['value'])
+            }
+          }
+        }
+        newsDiv.push(newsText)
+      }
+    }
+  newsElement=newsDiv.map((text)=> `<p>${text}</p>`)
+  const newsInfo =document.createElement('div');
+  newsInfo.classList.add('match-score');
+  newsInfo.innerHTML=`
+  <div class="news-data">
+  <p class="back" onclick="getNews()">< back</p>
+  <h1 class="comm-heading">News Story</h1>
+  <h2>${data.headline}</h2>
+  ${newsElement.join(" ")}
+  <a href="${data.appIndex.webURL}" target='_blank' class="btn">Read full article here >></a>
+  </div> `; 
+  news.appendChild(newsInfo);
 }
