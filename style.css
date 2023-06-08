@@ -249,11 +249,11 @@ table td{
     text-align: center;
     margin: 25px auto;
     text-decoration: none;
+    border:2px solid black;
 }
 .btn:hover{
     background-color: white;
     color:black;
-    border:2px solid black;
 }
 @media screen and (max-width:540px) {
     

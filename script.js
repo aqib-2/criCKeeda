@@ -10,7 +10,7 @@ let news=document.getElementById('news');
 const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': 'ea775f6a52mshd0837970b316e8dp19c596jsn03822bdfaa41',
+		'X-RapidAPI-Key': 'abe8c30a79msh5301023185b9f90p156da9jsn9a30ee495925',
 		'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 	}
 };
@@ -60,10 +60,10 @@ function test(info){
   
 
 async function showScore(sId){
-  const URL = `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${sId}/comm`;
-  let response=await fetch(URL,options);
-  let data= await response.json();
-  //console.log(data);
+  try{
+    const URL = `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${sId}/comm`;
+    let response=await fetch(URL,options);
+    let data= await response.json();
   
   main.innerHTML="";
 
@@ -211,6 +211,10 @@ async function showScore(sId){
 
   main.appendChild(scoredata)
   }
+}catch (error) {
+  main.innerHTML='<div class="scorecard"><h4>Error From Api</h4></div>'
+  console.log(error);
+}
 }
 
 //function to get the news from API
